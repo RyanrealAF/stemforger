@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { getAnalytics, logEvent, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -12,10 +12,18 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+let analytics: Analytics | null = null;
+
+const getAnalyticsInstance = () => {
+  if (!analytics && typeof window !== 'undefined') {
+    analytics = getAnalytics(app);
+  }
+  return analytics;
+}
 
 export const logForgeEvent = (eventName: string, params?: any) => {
-  if (analytics) {
-    logEvent(analytics, eventName, params);
+  const analyticsInstance = getAnalyticsInstance();
+  if (analyticsInstance) {
+    logEvent(analyticsInstance, eventName, params);
   }
 };

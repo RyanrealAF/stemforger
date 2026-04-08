@@ -17,35 +17,35 @@ export default function App() {
   const socket = useRef<Socket | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  useEffect(() => {
-    socket.current = io(API_BASE);
-
-    socket.current.on('connect', () => {
-      console.log('Connected to WebSocket server');
-    });
-
-    if (jobId) {
-      socket.current.on(jobId, (data: { status: 'forging' | 'success' | 'error'; progress?: number, message?: string }) => {
-        setStatus(data.status);
-        if (data.progress) {
-          setProgress(data.progress);
-        }
-        if (data.status === 'success') {
-          logForgeEvent('process_complete', { job_id: jobId });
-          setJobId(null); // Reset job ID
-        } else if (data.status === 'error') {
-          logForgeEvent('process_error', { error: data.message || 'Unknown error' });
-          setJobId(null); // Reset job ID
-        }
-      });
-    }
-
-    return () => {
-        if(socket.current) {
-            socket.current.disconnect();
-        }
-    };
-  }, [jobId]);
+  // useEffect(() => {
+  //   socket.current = io(API_BASE);
+  //
+  //   socket.current.on('connect', () => {
+  //     console.log('Connected to WebSocket server');
+  //   });
+  //
+  //   if (jobId) {
+  //     socket.current.on(jobId, (data: { status: 'forging' | 'success' | 'error'; progress?: number, message?: string }) => {
+  //       setStatus(data.status);
+  //       if (data.progress) {
+  //         setProgress(data.progress);
+  //       }
+  //       if (data.status === 'success') {
+  //         logForgeEvent('process_complete', { job_id: jobId });
+  //         setJobId(null); // Reset job ID
+  //       } else if (data.status === 'error') {
+  //         logForgeEvent('process_error', { error: data.message || 'Unknown error' });
+  //         setJobId(null); // Reset job ID
+  //       }
+  //     });
+  //   }
+  //
+  //   return () => {
+  //       if(socket.current) {
+  //           socket.current.disconnect();
+  //       }
+  //   };
+  // }, [jobId]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
