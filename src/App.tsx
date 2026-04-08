@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import Oscilloscope from './components/Oscilloscope';
-import Knob from './components/Knob';
-import Fader from './components/Fader';
+import { motion } from 'framer-motion';
 import { logForgeEvent } from './firebase';
 
 const API_BASE = 'https://ryanrealaf-stemforge.hf.space';
@@ -81,7 +78,7 @@ export default function App() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="console-frame w-full max-w-[1100px] bg-panel border-[3px] border-border p-[30px] grid grid-rows-[auto_auto_1fr_auto] gap-[25px] shadow-[20px_20px_0px_#000]"
+        className="console-frame w-full max-w-[1100px] bg-panel border-[3px] border-border p-[30px] grid grid-rows-[auto_1fr_auto] gap-[25px] shadow-[20px_20px_0px_#000]"
       >
         <div className="header flex justify-between items-end border-b-2 border-border pb-[10px]">
           <div className="brand text-[32px] font-bold tracking-[8px] text-accent uppercase">
@@ -90,23 +87,6 @@ export default function App() {
           <div className="meta font-mono text-[10px] text-border text-right">
             PROJECT: AI-SONG-WRITING<br />
             ACTIVE ENGINE: HF-DEMUCS
-          </div>
-        </div>
-
-        <Oscilloscope />
-
-        <div className="controls grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-[30px]">
-          <div className="rotary-array flex flex-col gap-[20px] justify-center bg-raised p-[20px] border border-border">
-            <Knob label="DRUM SAT" rotation={45} />
-            <Knob label="DRUM COMP" rotation={-20} />
-            <Knob label="DRUM WIDTH" rotation={110} />
-          </div>
-
-          <div className="fader-section grid grid-cols-2 sm:grid-cols-4 gap-[10px]">
-            <Fader label="VOCALS" />
-            <Fader label="DRUMS" />
-            <Fader label="BASS" />
-            <Fader label="MASTER" accent dual={false} />
           </div>
         </div>
 

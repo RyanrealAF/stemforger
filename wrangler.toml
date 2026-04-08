@@ -1,0 +1,7 @@
+name = "stemforger"
+compatibility_date = "2024-04-01"
+pages_build_output_dir = "."
+
+[vars]
+BACKEND = "https://ryanrealaf-stemforge.hf.space"
+FIREBASE_PROJECT_ID = "ai-song-writing"

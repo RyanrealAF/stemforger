@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBD-4-5Uvt9NEwFsubK-uGRHmCiz9EXbt8",
-  authDomain: "ai-song-writing.firebaseapp.com",
-  projectId: "ai-song-writing",
-  storageBucket: "ai-song-writing.firebasestorage.app",
-  messagingSenderId: "506680846805",
-  appId: "1:506680846805:web:3fe12807f8976f7955b55c",
-  measurementId: "G-T7PXP4P534"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
