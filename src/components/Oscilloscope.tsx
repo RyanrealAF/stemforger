@@ -1,14 +1,22 @@
 import { useEffect, useRef } from 'react';
 
-export default function Oscilloscope() {
+interface OscilloscopeProps {
+  analyser: AnalyserNode | null;
+}
+
+export default function Oscilloscope({ analyser }: OscilloscopeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !analyser) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    analyser.fftSize = 2048;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
 
     let animationFrameId: number;
 
@@ -18,20 +26,30 @@ export default function Oscilloscope() {
         canvas.height = canvas.offsetHeight;
       }
 
+      analyser.getByteTimeDomainData(dataArray);
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.strokeStyle = '#e8b84b';
       ctx.lineWidth = 1;
       ctx.beginPath();
 
-      for (let x = 0; x < canvas.width; x++) {
-        const y = (canvas.height / 2) + Math.sin(x * 0.05 + Date.now() * 0.01) * 20 * Math.random();
-        if (x === 0) {
+      const sliceWidth = canvas.width * 1.0 / bufferLength;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
+
+        if (i === 0) {
           ctx.moveTo(x, y);
         } else {
           ctx.lineTo(x, y);
         }
+
+        x += sliceWidth;
       }
 
+      ctx.lineTo(canvas.width, canvas.height / 2);
       ctx.stroke();
       animationFrameId = requestAnimationFrame(render);
     };
@@ -41,7 +59,7 @@ export default function Oscilloscope() {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [analyser]);
 
   return (
     <div className="monitor h-[140px] bg-black border border-border relative overflow-hidden">
