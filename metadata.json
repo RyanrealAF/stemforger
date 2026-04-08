@@ -1,0 +1,5 @@
+{
+  "name": "STEMFORGER",
+  "description": "AI-powered audio stem separation console using HF-Demucs engine.",
+  "requestFramePermissions": []
+}

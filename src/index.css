@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "Share Tech Mono", monospace;
+  --font-cond: "Barlow Condensed", sans-serif;
+  
+  --color-bg: #080808;
+  --color-panel: #111111;
+  --color-raised: #1a1a1a;
+  --color-border: #252525;
+  --color-accent: #e8b84b;
+  --color-text: #d1d1d1;
+}
+
+:root {
+  --bg: #080808;
+  --panel: #111111;
+  --raised: #1a1a1a;
+  --border: #252525;
+  --accent: #e8b84b;
+  --text: #d1d1d1;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: crosshair;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-cond);
+}
+
+/* Custom range styles for vertical sliders */
+input[type=range].v-slider {
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+  width: 8px;
+  height: 100%;
+  background: #000;
+  outline: none;
+}
